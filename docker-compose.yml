@@ -1,0 +1,10 @@
+services:
+  nextapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: next-video-prod
+    ports:
+      - "8000:3000"
+    environment:
+      - NODE_ENV=production

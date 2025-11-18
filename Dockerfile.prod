@@ -1,0 +1,29 @@
+# Etapa 1: build
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# instalar dependências
+COPY package*.json ./
+RUN npm install --frozen-lockfile
+
+# copiar código e gerar build
+COPY . .
+RUN npm run build
+
+# Etapa 2: execução
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+# copiar apenas os artefatos necessários do build
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+
+# variáveis de ambiente
+ENV NODE_ENV=production
+EXPOSE 3000
+
+CMD ["npm", "run", "start"]
