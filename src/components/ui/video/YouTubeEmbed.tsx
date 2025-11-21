@@ -194,7 +194,7 @@ const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({
 
       <video
         ref={videoRef}
-        src={`https://cutwise.site/backend/video_low/${idSolicitation}/${arquivo}`}
+        src={`https://cutwise.site/backend/video/${idSolicitation}/${arquivo}`}
         className="block w-full h-auto"
         controls={false}
         onClick={() => {
